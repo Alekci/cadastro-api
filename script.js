@@ -1,4 +1,4 @@
-var token = "966fa25784b1417988ea3b012779066a";
+var token = "a680d71addde424186cb8d9359037537";
 // Exemplo de requisição GET para listar pessoas
 fetch("https://crudcrud.com/api/" + token + "/pessoas")
     .then(response => response.json())
@@ -35,29 +35,47 @@ function botaTabela(pessoas) {
     })
 }
 
-function atualizar(id, nome, tel, end, data) {
-    window.location.href = "atualizarPessoa.html?id=" + id + "&nome=" + nome + "&tel=" + tel + "&end=" + end + "&data=" + data,{
-        method: "GET"
-    }
+function atualizar() {
+    var token = "a680d71addde424186cb8d9359037537";
+    var id = document.getElementById('pessoaId').value;
+    //  Exemplo de requisição PUT para atualizar uma pessoa existente
+    fetch("https://crudcrud.com/api/"+token+"/pessoas/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nome: document.getElementById('nome').value,
+            nascimento: document.getElementById('nascimento').value,
+            endereco: document.getElementById('endereco').value,
+            telefone: document.getElementById('telefone').value,
+        })
+        })
+        .then(() => console.log("Pessoa atualizado com sucesso"))
+        .catch(error => console.log(error))
+        .finally(() => {
+        // redirecionar para a pagina inicial
+        setTimeout(window.location.href = "tabela.html", 2000);
+        
+    });
 }
 
 
 
 function excluir(id) {
-    var token = "966fa25784b1417988ea3b012779066a";
+    var token = "a680d71addde424186cb8d9359037537";
     fetch("https://crudcrud.com/api/" + token + "/pessoas/" + id, {
         method: "DELETE"
     })
         .catch(error => console.error("Erro no DELETE:", error))
         .finally(() => {
             // redirecionar para a pagina inicial
-            setTimeout(window.location.href = "home.html", 2000);
+            setTimeout(window.location.href = "tabela.html", 2000);
 
         });
 }
-
 function cadastrar() {
-    var token = "966fa25784b1417988ea3b012779066a";
+    var token = "a680d71addde424186cb8d9359037537";
     // Exemplo de requisição POST para adicionar uma nova pessoa
     fetch("https://crudcrud.com/api/" + token + "/pessoas", {
         // metodo de requisição (get, post, put, delete)
@@ -80,6 +98,6 @@ function cadastrar() {
         .catch(error => console.error("Erro no POST:", error))
         .finally(() => {
             // redirecionar para a pagina inicial
-            setTimeout(window.location.href = "index.html", 2000);
+            setTimeout(window.location.href = "tabela.html", 2000);
         });
 }
